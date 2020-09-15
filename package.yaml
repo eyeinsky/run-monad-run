@@ -1,0 +1,15 @@
+name:                run-monad-run
+version:             0.0.0.1
+license:             MIT
+author:              "Markus Läll <markus.l2ll@gmail.com>"
+synopsis:            One run to run them all
+description:         See if one could have a single polymorphic run for all the run* functions.
+
+dependencies:
+- base >= 4.7 && < 5
+- mtl
+
+library:
+  source-dirs:           .
+  exposed-modules:
+  - Control.Monad.Run
