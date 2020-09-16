@@ -3,7 +3,12 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE AllowAmbiguousTypes #-}
+-- {-# LANGUAGE AllowAmbiguousTypes #-}
+-- {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE FlexibleInstances #-}
+
+
 module Control.Monad.Run where
 
 import Control.Monad.Identity
@@ -13,6 +18,24 @@ import Control.Monad.State
 import Control.Monad.RWS
 import Control.Monad.Except
 
+-- wip
+
+class Run' ma m | ma -> m where
+  run' :: ma
+
+instance Run' (r -> ReaderT r m a -> m a) (ReaderT r m) where
+  run' = undefined
+
+-- | Make the following work without needing an explicit type
+-- signature on the result:
+
+-- hot :: StateT () IO ()
+hot = run' () m
+  where
+    m :: ReaderT () (StateT () IO) ()
+    m = undefined
+
+-- /wip
 
 class (Monad m) => Run m where
   type Result m a
